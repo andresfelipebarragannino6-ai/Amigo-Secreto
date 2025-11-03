@@ -1,0 +1,2218 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPU6EEu0Cr4X1Az8FZk6cG5",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/andresfelipebarragannino6-ai/Amigo-Secreto/blob/main/Python%20Data%20Science\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install matplotlib # se instala la biblioteca matplotlib que sirve para graficar datos"
+      ],
+      "metadata": {
+        "id": "Rv5sIo7NM5VS",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "7267ea39-4dac-4c5c-e2aa-c7d307615f4b"
+      },
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: matplotlib in /usr/local/lib/python3.12/dist-packages (3.10.0)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (1.3.3)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (0.12.1)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (4.60.1)\n",
+            "Requirement already satisfied: kiwisolver>=1.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (1.4.9)\n",
+            "Requirement already satisfied: numpy>=1.23 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (2.0.2)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (25.0)\n",
+            "Requirement already satisfied: pillow>=8 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (11.3.0)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (3.2.5)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.12/dist-packages (from matplotlib) (2.9.0.post0)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.7->matplotlib) (1.17.0)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# matplotlib.__version__ # Se establece una función en la biblioteca de matplotlib que va a ayudar a verificar la versión que se usa actualmente en Python"
+      ],
+      "metadata": {
+        "id": "REYsDRqHM6hN"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Imprimir todos los paquetes instalados en el entorno y sus versiones\n",
+        "!pip list"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "LHZjmiZQh86V",
+        "outputId": "37598fb9-7fdc-4a0f-ead0-7e022b4e2785"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Package                                  Version\n",
+            "---------------------------------------- --------------------\n",
+            "absl-py                                  1.4.0\n",
+            "absolufy-imports                         0.3.1\n",
+            "accelerate                               1.11.0\n",
+            "aiofiles                                 24.1.0\n",
+            "aiohappyeyeballs                         2.6.1\n",
+            "aiohttp                                  3.13.1\n",
+            "aiosignal                                1.4.0\n",
+            "alabaster                                1.0.0\n",
+            "albucore                                 0.0.24\n",
+            "albumentations                           2.0.8\n",
+            "ale-py                                   0.11.2\n",
+            "alembic                                  1.17.0\n",
+            "altair                                   5.5.0\n",
+            "annotated-doc                            0.0.3\n",
+            "annotated-types                          0.7.0\n",
+            "antlr4-python3-runtime                   4.9.3\n",
+            "anyio                                    4.11.0\n",
+            "anywidget                                0.9.18\n",
+            "argon2-cffi                              25.1.0\n",
+            "argon2-cffi-bindings                     25.1.0\n",
+            "array_record                             0.8.2\n",
+            "arrow                                    1.4.0\n",
+            "arviz                                    0.22.0\n",
+            "astropy                                  7.1.1\n",
+            "astropy-iers-data                        0.2025.10.27.0.39.10\n",
+            "astunparse                               1.6.3\n",
+            "atpublic                                 5.1\n",
+            "attrs                                    25.4.0\n",
+            "audioread                                3.1.0\n",
+            "Authlib                                  1.6.5\n",
+            "autograd                                 1.8.0\n",
+            "babel                                    2.17.0\n",
+            "backcall                                 0.2.0\n",
+            "beartype                                 0.22.4\n",
+            "beautifulsoup4                           4.13.5\n",
+            "betterproto                              2.0.0b6\n",
+            "bigframes                                2.27.0\n",
+            "bigquery-magics                          0.10.3\n",
+            "bleach                                   6.3.0\n",
+            "blinker                                  1.9.0\n",
+            "blis                                     1.3.0\n",
+            "blobfile                                 3.1.0\n",
+            "blosc2                                   3.11.0\n",
+            "bokeh                                    3.7.3\n",
+            "Bottleneck                               1.4.2\n",
+            "bqplot                                   0.12.45\n",
+            "branca                                   0.8.2\n",
+            "Brotli                                   1.1.0\n",
+            "build                                    1.3.0\n",
+            "CacheControl                             0.14.3\n",
+            "cachetools                               5.5.2\n",
+            "catalogue                                2.0.10\n",
+            "certifi                                  2025.10.5\n",
+            "cffi                                     2.0.0\n",
+            "chardet                                  5.2.0\n",
+            "charset-normalizer                       3.4.4\n",
+            "chex                                     0.1.90\n",
+            "clarabel                                 0.11.1\n",
+            "click                                    8.3.0\n",
+            "cloudpathlib                             0.23.0\n",
+            "cloudpickle                              3.1.1\n",
+            "cmake                                    3.31.6\n",
+            "cmdstanpy                                1.3.0\n",
+            "colorcet                                 3.1.0\n",
+            "colorlover                               0.3.0\n",
+            "colour                                   0.1.5\n",
+            "community                                1.0.0b1\n",
+            "confection                               0.1.5\n",
+            "cons                                     0.4.7\n",
+            "contourpy                                1.3.3\n",
+            "cramjam                                  2.11.0\n",
+            "cryptography                             43.0.3\n",
+            "cuda-python                              12.6.2.post1\n",
+            "cudf-cu12                                25.6.0\n",
+            "cudf-polars-cu12                         25.6.0\n",
+            "cufflinks                                0.17.3\n",
+            "cuml-cu12                                25.6.0\n",
+            "cupy-cuda12x                             13.3.0\n",
+            "curl_cffi                                0.13.0\n",
+            "cuvs-cu12                                25.6.1\n",
+            "cvxopt                                   1.3.2\n",
+            "cvxpy                                    1.6.7\n",
+            "cycler                                   0.12.1\n",
+            "cyipopt                                  1.5.0\n",
+            "cymem                                    2.0.11\n",
+            "Cython                                   3.0.12\n",
+            "dask                                     2025.5.0\n",
+            "dask-cuda                                25.6.0\n",
+            "dask-cudf-cu12                           25.6.0\n",
+            "dataproc-spark-connect                   0.8.3\n",
+            "datasets                                 4.0.0\n",
+            "db-dtypes                                1.4.3\n",
+            "dbus-python                              1.2.18\n",
+            "debugpy                                  1.8.15\n",
+            "decorator                                4.4.2\n",
+            "defusedxml                               0.7.1\n",
+            "diffusers                                0.35.2\n",
+            "dill                                     0.3.8\n",
+            "distributed                              2025.5.0\n",
+            "distributed-ucxx-cu12                    0.44.0\n",
+            "distro                                   1.9.0\n",
+            "dlib                                     19.24.6\n",
+            "dm-tree                                  0.1.9\n",
+            "docstring_parser                         0.17.0\n",
+            "docutils                                 0.21.2\n",
+            "dopamine_rl                              4.1.2\n",
+            "duckdb                                   1.3.2\n",
+            "earthengine-api                          1.5.24\n",
+            "easydict                                 1.13\n",
+            "editdistance                             0.8.1\n",
+            "eerepr                                   0.1.2\n",
+            "einops                                   0.8.1\n",
+            "en_core_web_sm                           3.8.0\n",
+            "entrypoints                              0.4\n",
+            "et_xmlfile                               2.0.0\n",
+            "etils                                    1.13.0\n",
+            "etuples                                  0.3.10\n",
+            "Farama-Notifications                     0.0.4\n",
+            "fastai                                   2.8.5\n",
+            "fastapi                                  0.120.1\n",
+            "fastcore                                 1.8.13\n",
+            "fastdownload                             0.0.7\n",
+            "fastjsonschema                           2.21.2\n",
+            "fastprogress                             1.0.3\n",
+            "fastrlock                                0.8.3\n",
+            "fasttransform                            0.0.2\n",
+            "ffmpy                                    0.6.4\n",
+            "filelock                                 3.20.0\n",
+            "firebase-admin                           6.9.0\n",
+            "Flask                                    3.1.2\n",
+            "flatbuffers                              25.9.23\n",
+            "flax                                     0.10.7\n",
+            "folium                                   0.20.0\n",
+            "fonttools                                4.60.1\n",
+            "fqdn                                     1.5.1\n",
+            "frozendict                               2.4.6\n",
+            "frozenlist                               1.8.0\n",
+            "fsspec                                   2025.3.0\n",
+            "future                                   1.0.0\n",
+            "gast                                     0.6.0\n",
+            "gcsfs                                    2025.3.0\n",
+            "GDAL                                     3.8.4\n",
+            "gdown                                    5.2.0\n",
+            "geemap                                   0.35.3\n",
+            "geocoder                                 1.38.1\n",
+            "geographiclib                            2.1\n",
+            "geopandas                                1.1.1\n",
+            "geopy                                    2.4.1\n",
+            "gin-config                               0.5.0\n",
+            "gitdb                                    4.0.12\n",
+            "GitPython                                3.1.45\n",
+            "glob2                                    0.7\n",
+            "google                                   2.0.3\n",
+            "google-adk                               1.17.0\n",
+            "google-ai-generativelanguage             0.6.15\n",
+            "google-api-core                          2.28.0\n",
+            "google-api-python-client                 2.185.0\n",
+            "google-auth                              2.38.0\n",
+            "google-auth-httplib2                     0.2.0\n",
+            "google-auth-oauthlib                     1.2.2\n",
+            "google-cloud-aiplatform                  1.122.0\n",
+            "google-cloud-appengine-logging           1.7.0\n",
+            "google-cloud-audit-log                   0.4.0\n",
+            "google-cloud-bigquery                    3.38.0\n",
+            "google-cloud-bigquery-connection         1.19.0\n",
+            "google-cloud-bigquery-storage            2.34.0\n",
+            "google-cloud-bigtable                    2.34.0\n",
+            "google-cloud-core                        2.4.3\n",
+            "google-cloud-dataproc                    5.23.0\n",
+            "google-cloud-datastore                   2.21.0\n",
+            "google-cloud-discoveryengine             0.13.12\n",
+            "google-cloud-firestore                   2.21.0\n",
+            "google-cloud-functions                   1.21.0\n",
+            "google-cloud-language                    2.18.0\n",
+            "google-cloud-logging                     3.12.1\n",
+            "google-cloud-monitoring                  2.28.0\n",
+            "google-cloud-resource-manager            1.15.0\n",
+            "google-cloud-secret-manager              2.25.0\n",
+            "google-cloud-spanner                     3.59.0\n",
+            "google-cloud-speech                      2.34.0\n",
+            "google-cloud-storage                     2.19.0\n",
+            "google-cloud-trace                       1.17.0\n",
+            "google-cloud-translate                   3.22.0\n",
+            "google-colab                             1.0.0\n",
+            "google-crc32c                            1.7.1\n",
+            "google-genai                             1.46.0\n",
+            "google-generativeai                      0.8.5\n",
+            "google-pasta                             0.2.0\n",
+            "google-resumable-media                   2.7.2\n",
+            "googleapis-common-protos                 1.71.0\n",
+            "googledrivedownloader                    1.1.0\n",
+            "gradio                                   5.49.1\n",
+            "gradio_client                            1.13.3\n",
+            "graphviz                                 0.21\n",
+            "greenlet                                 3.2.4\n",
+            "groovy                                   0.1.2\n",
+            "grpc-google-iam-v1                       0.14.3\n",
+            "grpc-interceptor                         0.15.4\n",
+            "grpcio                                   1.76.0\n",
+            "grpcio-status                            1.71.2\n",
+            "grpclib                                  0.4.8\n",
+            "gspread                                  6.2.1\n",
+            "gspread-dataframe                        4.0.0\n",
+            "gym                                      0.25.2\n",
+            "gym-notices                              0.1.0\n",
+            "gymnasium                                1.2.1\n",
+            "h11                                      0.16.0\n",
+            "h2                                       4.3.0\n",
+            "h5netcdf                                 1.7.3\n",
+            "h5py                                     3.15.1\n",
+            "hdbscan                                  0.8.40\n",
+            "hf_transfer                              0.1.9\n",
+            "hf-xet                                   1.2.0\n",
+            "highspy                                  1.12.0\n",
+            "holidays                                 0.83\n",
+            "holoviews                                1.21.0\n",
+            "hpack                                    4.1.0\n",
+            "html5lib                                 1.1\n",
+            "httpcore                                 1.0.9\n",
+            "httpimport                               1.4.1\n",
+            "httplib2                                 0.31.0\n",
+            "httpx                                    0.28.1\n",
+            "httpx-sse                                0.4.3\n",
+            "huggingface-hub                          0.36.0\n",
+            "humanize                                 4.14.0\n",
+            "hyperframe                               6.1.0\n",
+            "hyperopt                                 0.2.7\n",
+            "ibis-framework                           9.5.0\n",
+            "idna                                     3.11\n",
+            "imageio                                  2.37.0\n",
+            "imageio-ffmpeg                           0.6.0\n",
+            "imagesize                                1.4.1\n",
+            "imbalanced-learn                         0.14.0\n",
+            "immutabledict                            4.2.2\n",
+            "importlib_metadata                       8.7.0\n",
+            "importlib_resources                      6.5.2\n",
+            "imutils                                  0.5.4\n",
+            "inflect                                  7.5.0\n",
+            "iniconfig                                2.3.0\n",
+            "intel-cmplr-lib-ur                       2025.3.0\n",
+            "intel-openmp                             2025.3.0\n",
+            "ipyevents                                2.0.4\n",
+            "ipyfilechooser                           0.6.0\n",
+            "ipykernel                                6.17.1\n",
+            "ipyleaflet                               0.20.0\n",
+            "ipyparallel                              8.8.0\n",
+            "ipython                                  7.34.0\n",
+            "ipython-genutils                         0.2.0\n",
+            "ipython-sql                              0.5.0\n",
+            "ipytree                                  0.2.2\n",
+            "ipywidgets                               7.7.1\n",
+            "isoduration                              20.11.0\n",
+            "itsdangerous                             2.2.0\n",
+            "jaraco.classes                           3.4.0\n",
+            "jaraco.context                           6.0.1\n",
+            "jaraco.functools                         4.3.0\n",
+            "jax                                      0.7.2\n",
+            "jax-cuda12-pjrt                          0.7.2\n",
+            "jax-cuda12-plugin                        0.7.2\n",
+            "jaxlib                                   0.7.2\n",
+            "jeepney                                  0.9.0\n",
+            "jieba                                    0.42.1\n",
+            "Jinja2                                   3.1.6\n",
+            "jiter                                    0.11.1\n",
+            "joblib                                   1.5.2\n",
+            "jsonpatch                                1.33\n",
+            "jsonpickle                               4.1.1\n",
+            "jsonpointer                              3.0.0\n",
+            "jsonschema                               4.25.1\n",
+            "jsonschema-specifications                2025.9.1\n",
+            "jupyter_client                           7.4.9\n",
+            "jupyter-console                          6.6.3\n",
+            "jupyter_core                             5.9.1\n",
+            "jupyter-events                           0.12.0\n",
+            "jupyter_kernel_gateway                   2.5.2\n",
+            "jupyter-leaflet                          0.20.0\n",
+            "jupyter_server                           2.14.0\n",
+            "jupyter_server_terminals                 0.5.3\n",
+            "jupyterlab_pygments                      0.3.0\n",
+            "jupyterlab_widgets                       3.0.15\n",
+            "jupytext                                 1.17.3\n",
+            "kaggle                                   1.7.4.5\n",
+            "kagglehub                                0.3.13\n",
+            "keras                                    3.10.0\n",
+            "keras-hub                                0.21.1\n",
+            "keras-nlp                                0.21.1\n",
+            "keyring                                  25.6.0\n",
+            "keyrings.google-artifactregistry-auth    1.1.2\n",
+            "kiwisolver                               1.4.9\n",
+            "langchain                                0.3.27\n",
+            "langchain-core                           0.3.79\n",
+            "langchain-text-splitters                 0.3.11\n",
+            "langcodes                                3.5.0\n",
+            "langsmith                                0.4.38\n",
+            "language_data                            1.3.0\n",
+            "lark                                     1.3.1\n",
+            "launchpadlib                             1.10.16\n",
+            "lazr.restfulclient                       0.14.4\n",
+            "lazr.uri                                 1.0.6\n",
+            "lazy_loader                              0.4\n",
+            "libclang                                 18.1.1\n",
+            "libcudf-cu12                             25.6.0\n",
+            "libcugraph-cu12                          25.6.0\n",
+            "libcuml-cu12                             25.6.0\n",
+            "libcuvs-cu12                             25.6.1\n",
+            "libkvikio-cu12                           25.6.0\n",
+            "libpysal                                 4.13.0\n",
+            "libraft-cu12                             25.6.0\n",
+            "librmm-cu12                              25.6.0\n",
+            "librosa                                  0.11.0\n",
+            "libucx-cu12                              1.18.1\n",
+            "libucxx-cu12                             0.44.0\n",
+            "lightgbm                                 4.6.0\n",
+            "linkify-it-py                            2.0.3\n",
+            "llvmlite                                 0.43.0\n",
+            "locket                                   1.0.0\n",
+            "logical-unification                      0.4.7\n",
+            "lxml                                     5.4.0\n",
+            "Mako                                     1.3.10\n",
+            "marisa-trie                              1.3.1\n",
+            "Markdown                                 3.9\n",
+            "markdown-it-py                           4.0.0\n",
+            "MarkupSafe                               3.0.3\n",
+            "matplotlib                               3.10.0\n",
+            "matplotlib-inline                        0.2.1\n",
+            "matplotlib-venn                          1.1.2\n",
+            "mcp                                      1.19.0\n",
+            "mdit-py-plugins                          0.5.0\n",
+            "mdurl                                    0.1.2\n",
+            "miniKanren                               1.0.5\n",
+            "missingno                                0.5.2\n",
+            "mistune                                  3.1.4\n",
+            "mizani                                   0.13.5\n",
+            "mkl                                      2025.2.0\n",
+            "ml_dtypes                                0.5.3\n",
+            "mlxtend                                  0.23.4\n",
+            "more-itertools                           10.8.0\n",
+            "moviepy                                  1.0.3\n",
+            "mpmath                                   1.3.0\n",
+            "msgpack                                  1.1.2\n",
+            "multidict                                6.7.0\n",
+            "multipledispatch                         1.0.0\n",
+            "multiprocess                             0.70.16\n",
+            "multitasking                             0.0.12\n",
+            "murmurhash                               1.0.13\n",
+            "music21                                  9.3.0\n",
+            "namex                                    0.1.0\n",
+            "narwhals                                 2.10.0\n",
+            "natsort                                  8.4.0\n",
+            "nbclassic                                1.3.3\n",
+            "nbclient                                 0.10.2\n",
+            "nbconvert                                7.16.6\n",
+            "nbformat                                 5.10.4\n",
+            "ndindex                                  1.10.0\n",
+            "nest-asyncio                             1.6.0\n",
+            "networkx                                 3.5\n",
+            "nibabel                                  5.3.2\n",
+            "nltk                                     3.9.1\n",
+            "notebook                                 6.5.7\n",
+            "notebook_shim                            0.2.4\n",
+            "numba                                    0.60.0\n",
+            "numba-cuda                               0.11.0\n",
+            "numexpr                                  2.14.1\n",
+            "numpy                                    2.0.2\n",
+            "nvidia-cublas-cu12                       12.6.4.1\n",
+            "nvidia-cuda-cupti-cu12                   12.6.80\n",
+            "nvidia-cuda-nvcc-cu12                    12.5.82\n",
+            "nvidia-cuda-nvrtc-cu12                   12.6.77\n",
+            "nvidia-cuda-runtime-cu12                 12.6.77\n",
+            "nvidia-cudnn-cu12                        9.10.2.21\n",
+            "nvidia-cufft-cu12                        11.3.0.4\n",
+            "nvidia-cufile-cu12                       1.11.1.6\n",
+            "nvidia-curand-cu12                       10.3.7.77\n",
+            "nvidia-cusolver-cu12                     11.7.1.2\n",
+            "nvidia-cusparse-cu12                     12.5.4.2\n",
+            "nvidia-cusparselt-cu12                   0.7.1\n",
+            "nvidia-ml-py                             12.575.51\n",
+            "nvidia-nccl-cu12                         2.27.3\n",
+            "nvidia-nvjitlink-cu12                    12.6.85\n",
+            "nvidia-nvshmem-cu12                      3.4.5\n",
+            "nvidia-nvtx-cu12                         12.6.77\n",
+            "nvtx                                     0.2.13\n",
+            "nx-cugraph-cu12                          25.6.0\n",
+            "oauth2client                             4.1.3\n",
+            "oauthlib                                 3.3.1\n",
+            "omegaconf                                2.3.0\n",
+            "openai                                   1.109.1\n",
+            "opencv-contrib-python                    4.12.0.88\n",
+            "opencv-python                            4.12.0.88\n",
+            "opencv-python-headless                   4.12.0.88\n",
+            "openpyxl                                 3.1.5\n",
+            "opentelemetry-api                        1.37.0\n",
+            "opentelemetry-exporter-gcp-logging       1.10.0a0\n",
+            "opentelemetry-exporter-gcp-monitoring    1.10.0a0\n",
+            "opentelemetry-exporter-gcp-trace         1.10.0\n",
+            "opentelemetry-exporter-otlp-proto-common 1.37.0\n",
+            "opentelemetry-exporter-otlp-proto-http   1.37.0\n",
+            "opentelemetry-proto                      1.37.0\n",
+            "opentelemetry-resourcedetector-gcp       1.10.0a0\n",
+            "opentelemetry-sdk                        1.37.0\n",
+            "opentelemetry-semantic-conventions       0.58b0\n",
+            "opt_einsum                               3.4.0\n",
+            "optax                                    0.2.6\n",
+            "optree                                   0.17.0\n",
+            "orbax-checkpoint                         0.11.26\n",
+            "orjson                                   3.11.4\n",
+            "osqp                                     1.0.5\n",
+            "overrides                                7.7.0\n",
+            "packaging                                25.0\n",
+            "pandas                                   2.2.2\n",
+            "pandas-datareader                        0.10.0\n",
+            "pandas-gbq                               0.29.2\n",
+            "pandas-stubs                             2.2.2.240909\n",
+            "pandocfilters                            1.5.1\n",
+            "panel                                    1.8.2\n",
+            "param                                    2.2.1\n",
+            "parso                                    0.8.5\n",
+            "parsy                                    2.2\n",
+            "partd                                    1.4.2\n",
+            "patsy                                    1.0.2\n",
+            "peewee                                   3.18.2\n",
+            "peft                                     0.17.1\n",
+            "pexpect                                  4.9.0\n",
+            "pickleshare                              0.7.5\n",
+            "pillow                                   11.3.0\n",
+            "pip                                      24.1.2\n",
+            "platformdirs                             4.5.0\n",
+            "plotly                                   5.24.1\n",
+            "plotnine                                 0.14.5\n",
+            "pluggy                                   1.6.0\n",
+            "plum-dispatch                            2.6.0\n",
+            "ply                                      3.11\n",
+            "polars                                   1.25.2\n",
+            "pooch                                    1.8.2\n",
+            "portpicker                               1.5.2\n",
+            "preshed                                  3.0.10\n",
+            "prettytable                              3.16.0\n",
+            "proglog                                  0.1.12\n",
+            "progressbar2                             4.5.0\n",
+            "prometheus_client                        0.23.1\n",
+            "promise                                  2.3\n",
+            "prompt_toolkit                           3.0.52\n",
+            "propcache                                0.4.1\n",
+            "prophet                                  1.1.7\n",
+            "proto-plus                               1.26.1\n",
+            "protobuf                                 5.29.5\n",
+            "psutil                                   5.9.5\n",
+            "psycopg2                                 2.9.11\n",
+            "psygnal                                  0.15.0\n",
+            "ptyprocess                               0.7.0\n",
+            "py-cpuinfo                               9.0.0\n",
+            "py4j                                     0.10.9.7\n",
+            "pyarrow                                  18.1.0\n",
+            "pyasn1                                   0.6.1\n",
+            "pyasn1_modules                           0.4.2\n",
+            "pycairo                                  1.28.0\n",
+            "pycocotools                              2.0.10\n",
+            "pycparser                                2.23\n",
+            "pycryptodomex                            3.23.0\n",
+            "pydantic                                 2.11.10\n",
+            "pydantic_core                            2.33.2\n",
+            "pydantic-settings                        2.11.0\n",
+            "pydata-google-auth                       1.9.1\n",
+            "pydot                                    3.0.4\n",
+            "pydotplus                                2.0.2\n",
+            "PyDrive2                                 1.21.3\n",
+            "pydub                                    0.25.1\n",
+            "pyerfa                                   2.0.1.5\n",
+            "pygame                                   2.6.1\n",
+            "pygit2                                   1.19.0\n",
+            "Pygments                                 2.19.2\n",
+            "PyGObject                                3.42.0\n",
+            "PyJWT                                    2.10.1\n",
+            "pylibcudf-cu12                           25.6.0\n",
+            "pylibcugraph-cu12                        25.6.0\n",
+            "pylibraft-cu12                           25.6.0\n",
+            "pymc                                     5.26.1\n",
+            "pynndescent                              0.5.13\n",
+            "pynvjitlink-cu12                         0.7.0\n",
+            "pynvml                                   12.0.0\n",
+            "pyogrio                                  0.11.1\n",
+            "pyomo                                    6.9.5\n",
+            "PyOpenGL                                 3.1.10\n",
+            "pyOpenSSL                                24.2.1\n",
+            "pyparsing                                3.2.5\n",
+            "pyperclip                                1.11.0\n",
+            "pyproj                                   3.7.2\n",
+            "pyproject_hooks                          1.2.0\n",
+            "pyshp                                    3.0.2.post1\n",
+            "PySocks                                  1.7.1\n",
+            "pyspark                                  3.5.1\n",
+            "pytensor                                 2.35.1\n",
+            "pytest                                   8.4.2\n",
+            "python-apt                               0.0.0\n",
+            "python-box                               7.3.2\n",
+            "python-dateutil                          2.9.0.post0\n",
+            "python-dotenv                            1.2.1\n",
+            "python-json-logger                       4.0.0\n",
+            "python-louvain                           0.16\n",
+            "python-multipart                         0.0.20\n",
+            "python-slugify                           8.0.4\n",
+            "python-snappy                            0.7.3\n",
+            "python-utils                             3.9.1\n",
+            "pytz                                     2025.2\n",
+            "pyviz_comms                              3.0.6\n",
+            "PyWavelets                               1.9.0\n",
+            "PyYAML                                   6.0.3\n",
+            "pyzmq                                    26.2.1\n",
+            "raft-dask-cu12                           25.6.0\n",
+            "rapids-dask-dependency                   25.6.0\n",
+            "rapids-logger                            0.1.19\n",
+            "ratelim                                  0.1.6\n",
+            "referencing                              0.37.0\n",
+            "regex                                    2024.11.6\n",
+            "requests                                 2.32.4\n",
+            "requests-oauthlib                        2.0.0\n",
+            "requests-toolbelt                        1.0.0\n",
+            "requirements-parser                      0.9.0\n",
+            "rfc3339-validator                        0.1.4\n",
+            "rfc3986-validator                        0.1.1\n",
+            "rfc3987-syntax                           1.1.0\n",
+            "rich                                     13.9.4\n",
+            "rmm-cu12                                 25.6.0\n",
+            "roman-numerals-py                        3.1.0\n",
+            "rpds-py                                  0.28.0\n",
+            "rpy2                                     3.5.17\n",
+            "rsa                                      4.9.1\n",
+            "ruff                                     0.14.2\n",
+            "safehttpx                                0.1.7\n",
+            "safetensors                              0.6.2\n",
+            "scikit-image                             0.25.2\n",
+            "scikit-learn                             1.6.1\n",
+            "scipy                                    1.16.3\n",
+            "scooby                                   0.10.2\n",
+            "scs                                      3.2.9\n",
+            "seaborn                                  0.13.2\n",
+            "SecretStorage                            3.4.0\n",
+            "semantic-version                         2.10.0\n",
+            "Send2Trash                               1.8.3\n",
+            "sentence-transformers                    5.1.2\n",
+            "sentencepiece                            0.2.1\n",
+            "sentry-sdk                               2.42.1\n",
+            "setuptools                               75.2.0\n",
+            "shap                                     0.49.1\n",
+            "shapely                                  2.1.2\n",
+            "shellingham                              1.5.4\n",
+            "simple-parsing                           0.1.7\n",
+            "simplejson                               3.20.2\n",
+            "simsimd                                  6.5.3\n",
+            "six                                      1.17.0\n",
+            "sklearn-pandas                           2.2.0\n",
+            "slicer                                   0.0.8\n",
+            "smart_open                               7.4.1\n",
+            "smmap                                    5.0.2\n",
+            "sniffio                                  1.3.1\n",
+            "snowballstemmer                          3.0.1\n",
+            "sortedcontainers                         2.4.0\n",
+            "soundfile                                0.13.1\n",
+            "soupsieve                                2.8\n",
+            "soxr                                     1.0.0\n",
+            "spacy                                    3.8.7\n",
+            "spacy-legacy                             3.0.12\n",
+            "spacy-loggers                            1.0.5\n",
+            "spanner-graph-notebook                   1.1.8\n",
+            "Sphinx                                   8.2.3\n",
+            "sphinxcontrib-applehelp                  2.0.0\n",
+            "sphinxcontrib-devhelp                    2.0.0\n",
+            "sphinxcontrib-htmlhelp                   2.1.0\n",
+            "sphinxcontrib-jsmath                     1.0.1\n",
+            "sphinxcontrib-qthelp                     2.0.0\n",
+            "sphinxcontrib-serializinghtml            2.0.0\n",
+            "SQLAlchemy                               2.0.44\n",
+            "sqlalchemy-spanner                       1.17.1\n",
+            "sqlglot                                  25.20.2\n",
+            "sqlparse                                 0.5.3\n",
+            "srsly                                    2.5.1\n",
+            "sse-starlette                            3.0.2\n",
+            "stanio                                   0.5.1\n",
+            "starlette                                0.49.1\n",
+            "statsmodels                              0.14.5\n",
+            "stringzilla                              4.2.3\n",
+            "stumpy                                   1.13.0\n",
+            "sympy                                    1.13.3\n",
+            "tables                                   3.10.2\n",
+            "tabulate                                 0.9.0\n",
+            "tbb                                      2022.3.0\n",
+            "tblib                                    3.2.0\n",
+            "tcmlib                                   1.4.1\n",
+            "tenacity                                 8.5.0\n",
+            "tensorboard                              2.19.0\n",
+            "tensorboard-data-server                  0.7.2\n",
+            "tensorflow                               2.19.0\n",
+            "tensorflow-datasets                      4.9.9\n",
+            "tensorflow_decision_forests              1.12.0\n",
+            "tensorflow-hub                           0.16.1\n",
+            "tensorflow-metadata                      1.17.2\n",
+            "tensorflow-probability                   0.25.0\n",
+            "tensorflow-text                          2.19.0\n",
+            "tensorstore                              0.1.78\n",
+            "termcolor                                3.2.0\n",
+            "terminado                                0.18.1\n",
+            "text-unidecode                           1.3\n",
+            "textblob                                 0.19.0\n",
+            "tf_keras                                 2.19.0\n",
+            "tf-slim                                  1.1.0\n",
+            "thinc                                    8.3.6\n",
+            "threadpoolctl                            3.6.0\n",
+            "tifffile                                 2025.10.16\n",
+            "tiktoken                                 0.12.0\n",
+            "timm                                     1.0.21\n",
+            "tinycss2                                 1.4.0\n",
+            "tokenizers                               0.22.1\n",
+            "toml                                     0.10.2\n",
+            "tomlkit                                  0.13.3\n",
+            "toolz                                    0.12.1\n",
+            "torch                                    2.8.0+cu126\n",
+            "torchao                                  0.10.0\n",
+            "torchaudio                               2.8.0+cu126\n",
+            "torchdata                                0.11.0\n",
+            "torchsummary                             1.5.1\n",
+            "torchtune                                0.6.1\n",
+            "torchvision                              0.23.0+cu126\n",
+            "tornado                                  6.5.1\n",
+            "tqdm                                     4.67.1\n",
+            "traitlets                                5.7.1\n",
+            "traittypes                               0.2.3\n",
+            "transformers                             4.57.1\n",
+            "treelite                                 4.4.1\n",
+            "treescope                                0.1.10\n",
+            "triton                                   3.4.0\n",
+            "tsfresh                                  0.21.1\n",
+            "tweepy                                   4.16.0\n",
+            "typeguard                                4.4.4\n",
+            "typer                                    0.20.0\n",
+            "types-pytz                               2025.2.0.20250809\n",
+            "types-setuptools                         80.9.0.20250822\n",
+            "typing_extensions                        4.15.0\n",
+            "typing-inspection                        0.4.2\n",
+            "tzdata                                   2025.2\n",
+            "tzlocal                                  5.3.1\n",
+            "uc-micro-py                              1.0.3\n",
+            "ucx-py-cu12                              0.44.0\n",
+            "ucxx-cu12                                0.44.0\n",
+            "umap-learn                               0.5.9.post2\n",
+            "umf                                      1.0.2\n",
+            "uri-template                             1.3.0\n",
+            "uritemplate                              4.2.0\n",
+            "urllib3                                  2.5.0\n",
+            "uvicorn                                  0.38.0\n",
+            "vega-datasets                            0.9.0\n",
+            "wadllib                                  1.3.6\n",
+            "wandb                                    0.22.2\n",
+            "wasabi                                   1.1.3\n",
+            "watchdog                                 6.0.0\n",
+            "wcwidth                                  0.2.14\n",
+            "weasel                                   0.4.1\n",
+            "webcolors                                24.11.1\n",
+            "webencodings                             0.5.1\n",
+            "websocket-client                         1.9.0\n",
+            "websockets                               15.0.1\n",
+            "Werkzeug                                 3.1.3\n",
+            "wheel                                    0.45.1\n",
+            "widgetsnbextension                       3.6.10\n",
+            "wordcloud                                1.9.4\n",
+            "wrapt                                    2.0.0\n",
+            "wurlitzer                                3.1.1\n",
+            "xarray                                   2025.10.1\n",
+            "xarray-einstats                          0.9.1\n",
+            "xgboost                                  3.1.1\n",
+            "xlrd                                     2.0.2\n",
+            "xxhash                                   3.6.0\n",
+            "xyzservices                              2025.4.0\n",
+            "yarl                                     1.22.0\n",
+            "ydf                                      0.13.0\n",
+            "yellowbrick                              1.5\n",
+            "yfinance                                 0.2.66\n",
+            "zict                                     3.0.0\n",
+            "zipp                                     3.23.0\n",
+            "zstandard                                0.25.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import matplotlib # Este código permite importar la biblioteca matplotlib a Python para poder utilizarlo en posteriores códigos"
+      ],
+      "metadata": {
+        "id": "FPRrJmxjjedQ"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# !pip install matplotlib==3.8.1 # Se establece una obligación en la instalación de la biblioteca de matplotlib que es que instale la versión 3.8.1"
+      ],
+      "metadata": {
+        "id": "xy035zQzM75b"
+      },
+      "execution_count": 6,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import matplotlib.pyplot as plt # Se importa de la biblioteca de matplotlib específicamente pyplot que es una función en específico que permite graficar datos pero esa exportación va a adquirir un aliado que es como un apodo para ser llamado en posteriores códigos"
+      ],
+      "metadata": {
+        "id": "NHdPvM_6hn-a"
+      },
+      "execution_count": 7,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "plt.show() # Se llama la función pyplot que va a llamar al método show() que es el que va a graficar los datos que se declaran antes y se establecen por medio de la función bar() en los ejes x como y esos valores pero como no hay nada no devuelve una gráfica"
+      ],
+      "metadata": {
+        "id": "ES0Hsjvuh0my"
+      },
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from matplotlib import pyplot as plt # El from dice que va a llamar la biblioteca matplotlib que va a importar de manera específica pyplot que es una función en específico que permite graficar datos pero esa exportación va a adquirir un aliado que es como un apodo para ser llamado en posteriores códigos"
+      ],
+      "metadata": {
+        "id": "hme-WlDYM-Od"
+      },
+      "execution_count": 9,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "estudiantes = ['Juan', 'Maria', 'José'] # Se declara una variable que se denomina estudiantes que es de tipo lista donde va a contener nombres de estudiantes\n",
+        "notas = [9.0,8.5,6.5] # Se declara una variable que se denomina notas que es una variable que es de tipo lista donde va a contener las notas de estudiantes"
+      ],
+      "metadata": {
+        "id": "mv1h3vJsM-RK"
+      },
+      "execution_count": 10,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "plt.bar(estudiantes, notas) # Se llama la función plt que va a llamar el método bar() que va a declarar el primer dato que va a adquirir los valores del eje x que es por medio de la declaración de la variable estudiante y el segundo dato que va a adquirir los valores del eje y que es por medio de la declaración de la variable notas\n",
+        "plt.show() # Se llama la función plt que va a graficar lo que identifique en la función bar() que estable los valores del eje x como del eje y"
+      ],
+      "metadata": {
+        "id": "GK77H828M-Zk",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 430
+        },
+        "outputId": "0c1ddf8d-2cde-4d7b-abd7-fbfa2f4349c3"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 640x480 with 1 Axes>"
+            ],
+            "image/png": "iVBORw0KGgoAAAANSUhEUgAAAhYAAAGdCAYAAABO2DpVAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAFxdJREFUeJzt3XtsVoX5wPGnBS2IpSAXB7MKARIvdQqCy0TnnAZ0QMDbXIYZoHEOcYjMC/1D1AhW82NIpg4mm0IcCGbTaLxgEMMUNieCM07wggp088KchnKRirS/P4xNOsTthaeU4ueTnMT39Jz3PG9yhG/Pe3jfovr6+voAAEhQ3NwDAAAHDmEBAKQRFgBAGmEBAKQRFgBAGmEBAKQRFgBAmtb7+oB1dXXx7rvvRmlpaRQVFe3rwwMAe6C+vj42b94c3bt3j+Li3V+X2Odh8e6770Z5efm+PiwAkKC6ujqOOOKI3f58n4dFaWlpRHw+WPv27ff14QGAPVBTUxPl5eUNf4/vzj4Piy/e/mjfvr2wAIAW5r/dxuDmTQAgjbAAANIICwAgjbAAANIICwAgjbAAANIICwAgjbAAANIICwAgjbAAANIICwAgjbAAANIICwAgjbAAANIICwAgTevmHiBTj0mPN/cINLN1tw1p7hEAvtZcsQAA0ggLACCNsAAA0ggLACCNsAAA0ggLACCNsAAA0ggLACCNsAAA0ggLACCNsAAA0ggLACCNsAAA0ggLACCNsAAA0ggLACCNsAAA0ggLACBN6+YeAA4kPSY93twj0MzW3TakuUeAZuWKBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQpqCw2LlzZ9xwww3Rs2fPaNu2bfTq1StuueWWqK+vb6r5AIAWpHUhG99+++0xc+bMmDt3bhx33HHx4osvxpgxY6KsrCzGjx/fVDMCAC1EQWHx5z//OYYPHx5DhgyJiIgePXrEAw88EC+88EKTDAcAtCwFvRVyyimnxJIlS+KNN96IiIiXX345li1bFuecc85u96mtrY2amppGCwBwYCroisWkSZOipqYmjj766GjVqlXs3Lkzpk6dGiNHjtztPlVVVXHzzTfv9aAAwP6voCsWDz74YMybNy/mz58fq1atirlz58a0adNi7ty5u92nsrIyNm3a1LBUV1fv9dAAwP6poCsW1157bUyaNCl+9KMfRUTE8ccfH+vXr4+qqqoYNWrUl+5TUlISJSUlez8pALDfK+iKxbZt26K4uPEurVq1irq6utShAICWqaArFsOGDYupU6fGkUceGccdd1y89NJLMX369Ljkkkuaaj4AoAUpKCzuvPPOuOGGG+KKK66IjRs3Rvfu3ePyyy+PyZMnN9V8AEALUlBYlJaWxowZM2LGjBlNNA4A0JL5rhAAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADSCAsAII2wAADStG7uAQDI02PS4809As1s3W1DmvX4rlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQRlgAAGmEBQCQpuCw+Oc//xkXX3xxdOrUKdq2bRvHH398vPjii00xGwDQwrQuZOOPP/44Bg4cGGeccUY8+eST0aVLl3jzzTejY8eOTTUfANCCFBQWt99+e5SXl8d9993XsK5nz57pQwEALVNBb4U8+uij0b9//7jwwguja9eu0bdv35g9e/ZX7lNbWxs1NTWNFgDgwFRQWLz99tsxc+bM6NOnTzz11FMxduzYGD9+fMydO3e3+1RVVUVZWVnDUl5evtdDAwD7p4LCoq6uLvr16xe33npr9O3bN37605/GZZddFrNmzdrtPpWVlbFp06aGpbq6eq+HBgD2TwWFRbdu3eLYY49ttO6YY46JDRs27HafkpKSaN++faMFADgwFRQWAwcOjNdff73RujfeeCOOOuqo1KEAgJapoLC4+uqr4/nnn49bb7011q5dG/Pnz4977rknxo0b11TzAQAtSEFhMWDAgHj44YfjgQceiIqKirjllltixowZMXLkyKaaDwBoQQr6HIuIiKFDh8bQoUObYhYAoIXzXSEAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCkERYAQBphAQCk2auwuO2226KoqCgmTJiQNA4A0JLtcVisWLEifvOb38S3vvWtzHkAgBZsj8Jiy5YtMXLkyJg9e3Z07NjxK7etra2NmpqaRgsAcGDao7AYN25cDBkyJM4666z/um1VVVWUlZU1LOXl5XtySACgBSg4LBYsWBCrVq2Kqqqq/2n7ysrK2LRpU8NSXV1d8JAAQMvQupCNq6ur46qrrorFixdHmzZt/qd9SkpKoqSkZI+GAwBaloLCYuXKlbFx48bo169fw7qdO3fGs88+G3fddVfU1tZGq1at0ocEAFqGgsLizDPPjFdeeaXRujFjxsTRRx8d119/vagAgK+5gsKitLQ0KioqGq1r165ddOrUaZf1AMDXj0/eBADSFHTF4sssXbo0YQwA4EDgigUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkEZYAABphAUAkKagsKiqqooBAwZEaWlpdO3aNUaMGBGvv/56U80GALQwBYXFn/70pxg3blw8//zzsXjx4tixY0cMGjQotm7d2lTzAQAtSOtCNl60aFGjx3PmzImuXbvGypUr47vf/W7qYABAy1NQWPynTZs2RUTEYYcdttttamtro7a2tuFxTU3N3hwSANiP7fHNm3V1dTFhwoQYOHBgVFRU7Ha7qqqqKCsra1jKy8v39JAAwH5uj8Ni3Lhx8fe//z0WLFjwldtVVlbGpk2bGpbq6uo9PSQAsJ/bo7dCrrzyynjsscfi2WefjSOOOOIrty0pKYmSkpI9Gg4AaFkKCov6+vr4+c9/Hg8//HAsXbo0evbs2VRzAQAtUEFhMW7cuJg/f3488sgjUVpaGu+//35ERJSVlUXbtm2bZEAAoOUo6B6LmTNnxqZNm+J73/tedOvWrWFZuHBhU80HALQgBb8VAgCwO74rBABIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIIywAgDTCAgBIs0dhcffdd0ePHj2iTZs28e1vfzteeOGF7LkAgBao4LBYuHBhTJw4MW688cZYtWpVnHDCCTF48ODYuHFjU8wHALQgBYfF9OnT47LLLosxY8bEscceG7NmzYpDDjkk7r333qaYDwBoQVoXsvGnn34aK1eujMrKyoZ1xcXFcdZZZ8Vf/vKXL92ntrY2amtrGx5v2rQpIiJqamr2ZN6vVFe7Lf05aVma4rwqhHMQ5yDNranOwS+et76+/iu3KygsPvzww9i5c2ccfvjhjdYffvjh8dprr33pPlVVVXHzzTfvsr68vLyQQ8P/pGxGc0/A151zkObW1Ofg5s2bo6ysbLc/Lygs9kRlZWVMnDix4XFdXV189NFH0alTpygqKmrqw3+t1NTURHl5eVRXV0f79u2bexy+hpyDNDfnYNOpr6+PzZs3R/fu3b9yu4LConPnztGqVav44IMPGq3/4IMP4hvf+MaX7lNSUhIlJSWN1nXo0KGQw1Kg9u3b+x+KZuUcpLk5B5vGV12p+EJBN28efPDBcdJJJ8WSJUsa1tXV1cWSJUviO9/5TuETAgAHlILfCpk4cWKMGjUq+vfvHyeffHLMmDEjtm7dGmPGjGmK+QCAFqTgsLjoooviX//6V0yePDnef//9OPHEE2PRokW73NDJvldSUhI33njjLm89wb7iHKS5OQebX1H9f/t3IwAA/yPfFQIApBEWAEAaYQEApBEWwD4zZ84cn2PDfmHdunUxZcqU2LJlS3OPcsARFvup0aNHx4gRI5p7DL5GRo8eHUVFRfGzn/1sl5+NGzcuioqKYvTo0Xt1jIsuuijeeOONvXoO2Fu1tbVx4YUXRufOnePQQw9t7nEOOMICaFBeXh4LFiyITz75pGHd9u3bY/78+XHkkUfu1XPv2LEj2rZtG127dt3bMfkaaYpfsq6++uoYNGjQl0Y0e09YtAA9evSIGTNmNFp34oknxk033dTwePr06XH88cdHu3btory8PK644opGl/i+uAT91FNPxTHHHBOHHnponH322fHee+/to1dBS9CvX78oLy+Phx56qGHdQw89FEceeWT07du3Yd2iRYvi1FNPjQ4dOkSnTp1i6NCh8dZbbzX8fN26dVFUVBQLFy6M008/Pdq0aRPz5s3b5a2Qt956K4YPHx6HH354HHrooTFgwIB4+umn98lr5evr17/+dUydOrW5xzhgCYsDRHFxcfzqV7+KV199NebOnRvPPPNMXHfddY222bZtW0ybNi3uv//+ePbZZ2PDhg1xzTXXNNPE7K8uueSSuO+++xoe33vvvbt8su7WrVtj4sSJ8eKLL8aSJUuiuLg4zj333Kirq2u03aRJk+Kqq66KNWvWxODBg3c51pYtW+IHP/hBLFmyJF566aU4++yzY9iwYbFhw4ameXG0aLW1tTF+/Pjo2rVrtGnTJk499dRYsWJFw88//vjjGDlyZHTp0iXatm0bffr0aXQuV1dXxw9/+MPo0KFDHHbYYTF8+PBYt25dM7ySA5uwOEBMmDAhzjjjjOjRo0d8//vfjylTpsSDDz7YaJsdO3bErFmzon///tGvX7+48sorG33vC0REXHzxxbFs2bJYv359rF+/PpYvXx4XX3xxo23OP//8OO+886J3795x4oknxr333huvvPJKrF69utF2EyZMiPPOOy969uwZ3bp12+VYJ5xwQlx++eVRUVERffr0iVtuuSV69eoVjz76aJO+Rlqm6667Lv74xz/G3LlzY9WqVdG7d+8YPHhwfPTRRxERccMNN8Tq1avjySefjDVr1sTMmTOjc+fOEfH5n3+DBw+O0tLSeO6552L58uUNV24//fTT5nxZB5wm/9p09o2nn346qqqq4rXXXouampr47LPPYvv27bFt27Y45JBDIiLikEMOiV69ejXs061bt9i4cWNzjcx+qkuXLjFkyJCYM2dO1NfXx5AhQxr+cP7Cm2++GZMnT46//vWv8eGHHzZcqdiwYUNUVFQ0bNe/f/+vPNaWLVvipptuiscffzzee++9+Oyzz+KTTz5xxYJdbN26NWbOnBlz5syJc845JyIiZs+eHYsXL47f/e53ce2118aGDRuib9++Deddjx49GvZfuHBh1NXVxW9/+9soKiqKiIj77rsvOnToEEuXLo1Bgwbt89d0oBIWLUBxcXH85yev79ixo+G/161bF0OHDo2xY8fG1KlT47DDDotly5bFpZdeGp9++mlDWBx00EGNnqOoqGiX54WIz98OufLKKyMi4u67797l58OGDYujjjoqZs+eHd27d4+6urqoqKjY5Te/du3afeVxrrnmmli8eHFMmzYtevfuHW3bto0LLrjAb5Ds4q233oodO3bEwIEDG9YddNBBcfLJJ8eaNWsiImLs2LFx/vnnx6pVq2LQoEExYsSIOOWUUyIi4uWXX461a9dGaWlpo+fdvn17o/uD2HvCogXo0qVLo5ssa2pq4p133ml4vHLlyqirq4tf/vKXUVz8+btb//k2CBTii8vDRUVFu9wb8e9//ztef/31mD17dpx22mkREbFs2bI9Os7y5ctj9OjRce6550bE51cwvOfNnjrnnHNi/fr18cQTT8TixYvjzDPPjHHjxsW0adNiy5YtcdJJJ8W8efN22a9Lly7NMO2Byz0WLcD3v//9uP/+++O5556LV155JUaNGhWtWrVq+Hnv3r1jx44dceedd8bbb78d999/f8yaNasZJ6ala9WqVaxZsyZWr17d6FyLiOjYsWN06tQp7rnnnli7dm0888wzMXHixD06Tp8+feKhhx6Kv/3tb/Hyyy/Hj3/8411uAIWIiF69esXBBx8cy5cvb1i3Y8eOWLFiRRx77LEN67p06RKjRo2K3//+9zFjxoy45557IuLzf/H05ptvRteuXaN3796NlrKysn3+eg5kwmI/VVdXF61bf35BqbKyMk4//fQYOnRoDBkyJEaMGNHoXokTTjghpk+fHrfffntUVFTEvHnzoqqqqrlG5wDRvn37aN++/S7ri4uLY8GCBbFy5cqoqKiIq6++Ov7v//5vj44xffr06NixY5xyyikxbNiwGDx4cPTr129vR+cA1K5duxg7dmxce+21sWjRoli9enVcdtllsW3btrj00ksjImLy5MnxyCOPxNq1a+PVV1+Nxx57LI455piIiBg5cmR07tw5hg8fHs8991y88847sXTp0hg/fnz84x//aM6XdsDxten7qbPPPjt69+4dd911V3OPAtBsfvKTn8S2bdviD3/4Q2zfvj2uu+66eOCBB2Lz5s3Rv3//uOOOO2LAgAERETFlypSYP39+rFu3Ltq2bRunnXZa3HHHHdGzZ8+IiHj//ffj+uuvjyeeeCI2b94c3/zmN+PMM8+MadOmfWlEs2eExX7m448/juXLl8cFF1wQCxYs8LHewNeaX7JaHjdv7mcuueSSWLFiRfziF7+I4cOHN/c4AM3ii1+yli5d6qO3WxhXLADY75x77rmxYsWKGDVqVEyZMqXhsyfY/wkLACCNfxUCAKQRFgBAGmEBAKQRFgBAGmEBAKQRFgBAGmEBAKQRFgBAmv8HbRQ9riwtpD0AAAAASUVORK5CYII=\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "estudiantes_2 = ['Juan', 'Maria', 'José','Erika'] # se declara una variable que se denomina estudiantes_2 que es un tipo de dato lista que va a acumular los nombres de personas"
+      ],
+      "metadata": {
+        "id": "Y4o2AvhWNBdM"
+      },
+      "execution_count": 12,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random # Se va a declarar una biblioteca que es random que con base en esta librería se puede realizar una función que devolvería un dato aleatorio"
+      ],
+      "metadata": {
+        "id": "9fXfsVnANBiG"
+      },
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from random import choice # El from dice que va a llamar la biblioteca random que va a establecer la función choice que es la que se encarga de escoger un dato de la lista o diccionario que se le aplique la variable"
+      ],
+      "metadata": {
+        "id": "a2zJCXNUND9X"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "estudiante = choice(estudiantes_2) # Se va a declarar una variable se denomina estudiante que se le aplica la libreria choice a la variable que se declara antes que se denomino estudiantes_2 que es un tipo de dato lista que va a acumular los nombres de personas esa libreia que es choice que lo que va a determinar es un dato aleatorio de los datos que se acumularon en la lista estudiantes_2\n",
+        "estudiante # Se imprime en la pantalla el nombre escogido aleatoriamente de los datos que se acumularon en la variable estudiantes_2"
+      ],
+      "metadata": {
+        "id": "2Yvr71PIND_r",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "1065c6a0-7f30-4cdd-e4a3-12979f370ef1"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Maria'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "help(choice) # Se utiliza la función help() siendo aplicado a la función choice, para poder determinar un dato aleatorio de esa variable que se aplique"
+      ],
+      "metadata": {
+        "id": "UFfZz4CxNGjU",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8f6e5659-552a-4165-a0d9-510d96fa658f"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Help on method choice in module random:\n",
+            "\n",
+            "choice(seq) method of random.Random instance\n",
+            "    Choose a random element from a non-empty sequence.\n",
+            "\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from random import randrange, sample # El fromn dice que va a llamar la biblioteca random que va a establecer las funciones randrange y sample, la primera función que va a generar un número aleatorio que es de tipo entero a partir de un rango especifico que se declare dentro de la función y la segunda función que es sample que cuando se aplique la función que va a devolver una muestra de datos aleatorios que se aplique a una variable, pero se puede determinar el número de elementos que se quieran visualizar el usuario\n",
+        "\n",
+        "lista = [] # Se declara una variable que se denomina lista que es un dato de tipo lista, pero que esta vacia esa lista que va a guardar esos datos aleatorios que se generan desde 0 hasta 100 y los número de elementos que quiera establecer el usuario\n",
+        "\n",
+        "for i in range(0, 20): # Se declara una función que es for que va a realizar la funcionalidad de repetición, que se va a declarar una variable que se denomina i que va a iterar dentro del bucle declarado que es el for y se va a establecer un rango mediante la función range() que va desde el 0 hasta el 20 que va a acumular los valores aleatorios desde 0 hasta 100 que desee establecer el número de datos que van a ser acumulados en la lista vacia si esto se cumple se ejecuta lo siguiente\n",
+        "  lista.append(randrange(100)) # Se aplica a la variable que se denomina lista que se le va a aplica la función append() que va a funcionar como la adicción a la variable lista que se va a aplicar la primera función que es randrange que va a generar un número aleatorio que es de tipo entero a partir de un rango especifico que se declare dentro de la función que se va a establecer desde 0 hasta 100\n",
+        "\n",
+        "sample(lista, 5) # Se aplica la segunda función sample() que va a funcionar que va a aplicar a la lista que cuando se aplique la función que va a devolver una muestra de datos aleatorios que se aplique a una variable, pero se puede determinar el número de elementos que en este caso es 5 que se quieran visualizar el usuario"
+      ],
+      "metadata": {
+        "id": "7I4i2LBJjSZL",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "801efa06-b952-4cca-e4e1-6646c74a2e7f"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[14, 89, 69, 65, 11]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 17
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import math # Se va a insertar la biblioteca de math, que es una función que va a permitir realizar operaciones matematicas\n",
+        "\n",
+        "n = int(input(\"Digite um número positivo para calcular la raíz cuadrada:\")) # Se declara una variable que se denomina n que va a aplicar dos funciones, que la primera función es int que va a declarar que el número que escriba el usuario como un dato de tipo entero y la segunda función es input que va a escribir el mensaje que ingrese el número del usuario para sacarle la raíz cuadrada\n",
+        "print(f\"\\nA raiz cuadrada de {n} é igual a {math.sqrt(n)}\") # Se imprime en pantalla el mensaje, el valor de la variable n que representa el número que ingreso el usuario y se aplica la biblioteca math que va a llamar el metodo de sqrt() que se va a aplicar a la variable n que va a realizar la operación de sacar la raíz cuadrada del número ingresado por usuario"
+      ],
+      "metadata": {
+        "id": "XC0C9ErVjV1S",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "da7b2d90-666b-4a13-f670-1fc80bafe8f3"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Digite um número positivo para calcular la raíz cuadrada:4\n",
+            "\n",
+            "A raiz cuadrada de 4 é igual a 2.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from math import * # El fromn dice que va a llamar la biblioteca math que va a establecer todas las funciones a través de declarar el simbolo \"*\" que va a permitir utilizar todos los metodos de esa biblioteca\n",
+        "\n",
+        "n = int(input(\"Digite um número positivo para calcular la raíz cuadrada:\")) # Se declara una variable que se denomina n que va a aplicar dos funciones, que la primera función es int que va a declarar que el número que escriba el usuario como un dato de tipo entero y la segunda función es input que va a escribir el mensaje que ingrese el número del usuario para sacarle la raíz cuadrada\n",
+        "print(f\"\\nA raiz quadrada de {n} é igual a {sqrt(n)}\") # Se imprime en pantalla el mensaje, el valor de la variable n que representa el número que ingreso el usuario y se va a llamar el metodo de sqrt() que se va a aplicar a la variable n que va a realizar la operación de sacar la raíz cuadrada del número ingresado por usuario"
+      ],
+      "metadata": {
+        "id": "DY-goUAljYdW",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "cf52e0f2-2027-4966-d7ba-55f9a1585be9"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Digite um número positivo para calcular la raíz cuadrada:5\n",
+            "\n",
+            "A raiz quadrada de 5 é igual a 2.23606797749979\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\"\"\"\n",
+        "Problema:\n",
+        "Una empresa quiere calcular el número de artículos vendidos a partir de los ingresos de la venta y el valor unitario del producto. Además, necesita redondear hacia arriba la cantidad de artículos vendidos en caso de que el valor no sea un número entero.\n",
+        "\n",
+        "Supongamos que los ingresos fueron de 1000 dolares y la unidad del producto se vende a 15 dolares. ¿Cuál son los códigos a continuación utiliza el método ceil de la biblioteca math para realizar este redondeo?\n",
+        "\"\"\""
+      ],
+      "metadata": {
+        "id": "9DBK7gGejdsy",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 87
+        },
+        "outputId": "e8591b72-7226-44a1-a6b9-74495c82d617"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'\\nProblema:\\nUna empresa quiere calcular el número de artículos vendidos a partir de los ingresos de la venta y el valor unitario del producto. Además, necesita redondear hacia arriba la cantidad de artículos vendidos en caso de que el valor no sea un número entero.\\n\\nSupongamos que los ingresos fueron de 1000 dolares y la unidad del producto se vende a 15 dolares. ¿Cuál son los códigos a continuación utiliza el método ceil de la biblioteca math para realizar este redondeo?\\n'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 20
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Primera solución propuesta\n",
+        "from math import ceil # El from dice que va a llamar la biblioteca math que va a establecer la función ceil devuelve el entero más pequeño que es igual que un número dado\n",
+        "receita = 1000 # Se declara una variable que se denomina receita que va a adquirir el valor de 1000 que representa las recetas preparadas\n",
+        "unidade = 15 # Se declara una variable que se denomina unidade que va a adquirir el valor de 15 que representa la unidad de precio por preparación\n",
+        "print(f\"La empresa vendió aproximadamente {ceil(receita/unidade)} unidades\") # Se imprime en pantalla el mensaje y adquiere el valor de lo vendido que se obtiene por medio de aplicar la función ceil que va a tomar la operación de la variable receita sobre que se divida entre unidade que por medio de la función ceil que va a aproximar el número de la operación al mayor"
+      ],
+      "metadata": {
+        "id": "0rsCcbtFjni6",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "e67a2ffd-b51a-46c0-8518-9b7bb78c5a69"
+      },
+      "execution_count": 21,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "La empresa vendió aproximadamente 67 unidades\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Segunada solución propuesta\n",
+        "import math # Se va a insertar la biblioteca de math, que es una función que va a permitir realizar operaciones matematicas\n",
+        "receita = 1000 # Se declara una variable que se denomina receita que va a adquirir el valor de 1000 que representa las recetas preparadas\n",
+        "unidade = 15 # Se declara una variable que se denomina unidade que va a adquirir el valor de 15 que representa la unidad de precio por preparación\n",
+        "print(f\"La empresa vendió aproximadamente {math.ceil(receita/unidade)} unidades\") # Se imprime en pantalla el mensaje, el valor de la variable n que representa el número que ingreso el usuario y se aplica la biblioteca math que va a aplicar la función ceil que va a tomar la operación de la variable receita sobre que se divida entre unidade que por medio de la función ceil que va a aproximar el número de la operación al mayor"
+      ],
+      "metadata": {
+        "id": "WenojW8qj9e6",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "b3bf175c-c046-45b0-a9de-6873752d1950"
+      },
+      "execution_count": 22,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "La empresa vendió aproximadamente 67 unidades\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# !pip install matplotlib==3.7.1 # Se establece una obligación en la instalación de la biblioteca de matplotlib que es que instale la versión 3.7.1"
+      ],
+      "metadata": {
+        "id": "iAQA0KFTkKGK"
+      },
+      "execution_count": 23,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import matplotlib # Este código permite importar la biblioteca matplotlib a Python para poder utilizarlo en posteriores códigos"
+      ],
+      "metadata": {
+        "id": "w4flNV5nkzIL"
+      },
+      "execution_count": 24,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "matplotlib.__version__ # Se establece una función en la biblioteca de matplotlib que va a ayudar a verificar la versión que se usa actualmente en Python"
+      ],
+      "metadata": {
+        "id": "92uQWUpCk4Ya",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "outputId": "b29306ad-aec5-41c0-d462-2c1d9e198252"
+      },
+      "execution_count": 25,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'3.10.0'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 25
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np # Se va a permitir importar la biblioteca numpy y aplicarle un alias que va a ser np que se va a aplicar posteiormente en otra parte del codigo"
+      ],
+      "metadata": {
+        "id": "kcXKiBmClbQM"
+      },
+      "execution_count": 26,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from random import choice # El from dice que va a llamar la biblioteca random que va a establecer la función choice que es la que se encarga de escoger un dato de la lista o diccionario que se le aplique la variable"
+      ],
+      "metadata": {
+        "id": "P1INoSPAl9jV"
+      },
+      "execution_count": 27,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "lista = [8, 12, 54, 23, 43, 1, 90, 87, 105, 77] # Se declara una variable que se denomina lista que a acumular en una variable de tipo lista que va a establecerse una lista de números\n",
+        "numero_aleatorio = choice(lista) # Se declara una variable que se denomina numero_aleatorio que va a aplicar la función de choice() que va a establecer una selección aleatoria de un número de los números declarados en la variable lista\n",
+        "numero_aleatorio # Se imprime en pantalla el número escogido aleatorio de la lista de números establecidos en la variable lista"
+      ],
+      "metadata": {
+        "id": "rjtvbVbemCjK",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "245cf87f-3bdd-4754-9f02-9519505625a0"
+      },
+      "execution_count": 28,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "23"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 28
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numero=[i for i in range(100) if i <= 100] # Se declara una variable que se denomina numero que va a aplicarse, dentro de los corchetes se va a definir primero la variable i que representa el valor que va a ser almacenado en la lista, para despues declarar la variable i que representa la variable que va a iterar dentro del bucle for que va a abarcar en un rango declarado por la función range() que se declara desde 0 hasta 100 para luego ser aplicado la condicional que se declara que la variable i que es tanto la que va va a almacenar en la lista y la variable que va a iterar dentro del bucle for que tiene que ser menor o igual a 100 que es el número aleatorio que se va a mostrar\n",
+        "numero_aleatorio_2 = choice(numero) # Se declara una variable que se denomina numero_aleatorio que va a aplicar la función de choice() que va a establecer una selección aleatoria de un número de los números declarados en la variable numero\n",
+        "numero_aleatorio_2 # Se imprime en pantalla el número escogido aleatorio de la lista de números establecidas en la variable numero"
+      ],
+      "metadata": {
+        "id": "OSm6T-eimZjB",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "1d7df2b0-a319-4f93-bb9d-cf5b111c8917"
+      },
+      "execution_count": 29,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "27"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 29
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import math # Se va a insertar la biblioteca de math, que es una función que va a permitir realizar operaciones matematicas\n",
+        "numero_1 = int(input(\"Digite el número que se va a realizar la potencia:\")) # Se declara una variable que se denomina numero_1  que va a aplicar dos funciones, que la primera función es int que va a declarar que el número que escriba el usuario como un dato de tipo entero y la segunda función es input que va a escribir el mensaje que ingrese el número que va a ser el que se va a elevar del usuario que va a realizar la operación de potencialización\n",
+        "numero_2 = int(input(\"Digite el número que va a ser elevado el primer número:\")) # Se declara una variable que se denomina numero_1  que va a aplicar dos funciones, que la primera función es int que va a declarar que el número que escriba el usuario como un dato de tipo entero y la segunda función es input que va a escribir el mensaje que ingrese el número que va a ser la potencia del usuario que va a realizar la operación de potencialización\n",
+        "print(f'El resultado de {numero_1} elevado a {numero_2} es igual a {math.pow(numero_1,numero_2)}') # Se imprime en pantalla el mensaje, el valor de la variable numero_1 que es el número que se va a elevar, el valor de la variable numero_2 que es la potencia que se va a aplicar y por ultimo la aplicación de la biblioteca math() que va a aplicar la función pow() que va a pedir dos parametros que es el primero la variable numero_1 que es el número que va a ser elevado y el segundo es la variable numero_2 que es el número que se elevara"
+      ],
+      "metadata": {
+        "id": "CQcWPjIhnKrN",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "2e3ad624-1bba-46be-edd1-80906698c84e"
+      },
+      "execution_count": 30,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Digite el número que se va a realizar la potencia:2\n",
+            "Digite el número que va a ser elevado el primer número:2\n",
+            "El resultado de 2 elevado a 2 es igual a 4.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random # Se va a insertar la biblioteca de random, que es una función que va a permitir realizar la elección del número aleatorio\n",
+        "numero_participantes = int(input(\"Digite el número de participantes:\")) # Se declara una variable que se denomina numero_participantes que va a aplicar dos funciones, que la primera función es int que va a declarar que el número que escriba el usuario como un dato de tipo entero y la segunda función es input que va a escribir el mensaje que ingrese el número de participantes que se van a ingresar para realizar la elección del número aleatorio que estara declarado en el rango de personas que ingrese el usuario\n",
+        "random.randrange(numero_participantes) # Se va a imprimir en pantalla la aplicación de la biblioteca random que es la que va a permitir seleccionar el número de manera aleatoria y que se va a aplicar la función randrange() que es la que va a generar de forma directa el número aleatoreo entero a partir del rango que se establezca por la variable numero_participantes que es el dato que va a ingresar el usuario y se va a escoger un número que sera escogido de forma aleatorea"
+      ],
+      "metadata": {
+        "id": "kOp-4kaXoLza",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a62b46d7-b752-48e9-bea9-2fd3dac9d1fc"
+      },
+      "execution_count": 34,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Digite el número de participantes:10\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "3"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 34
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random # Se va a insertar la biblioteca de random, que es una función que va a permitir realizar la elección del número aleatorio\n",
+        "nombre_usuario = input(\"Digite su nombre de usuario:\") # Se declara una variable que se denomina nombre_usuario que se va a utilizar la función input() que lo que va a realizar es que el usuario escriba su nombre\n",
+        "token_generado = random.randrange(1000,9999,2) # Se va a declarar una variable que se denomina token_generado que se va a utilizar la biblioteca random que va a llamar la función randrange() que va a establecer un número aleatorio que va a ir desde 1000 hasta 9999 avanzando de 2 en 2 para escoger un número aleatorio\n",
+        "print(f\"Hola, {nombre_usuario}, tu token de acceso es {token_generado} ¡Bienvenido/a!\") # Se imprime en pantalla el mensaje, el valor de la variable nombre_usuario que va a mostrar el nombre que ingreso el usuario y se va a mostrar el valor de la variable token_generado que va a el número aleatorio escogido para ese usuario"
+      ],
+      "metadata": {
+        "id": "PrPuYUcAq0jI",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "ffcc816f-ab45-47b5-81f0-7d3eb239097a"
+      },
+      "execution_count": 35,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Digite su nombre de usuario:Andrés\n",
+            "Hola, Andrés, tu token de acceso es 3406 ¡Bienvenido/a!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random # Se va a insertar la biblioteca de random, que es una función que va a permitir realizar la elección del número aleatorio\n",
+        "frutas = [\"manzana\", \"banana\", \"uva\", \"pera\", \"mango\", \"coco\", \"sandia\", \"fresa\", \"naranja\", \"maracuya\", \"kiwi\", \"cereza\"] # Se declara una variable que se denomina frutas que es un dato de tipo lista que va a contener datos de tipo string que van a ser una lista de frutas\n",
+        "frutas_aleatorias = random.sample(frutas,k=3) # Se declara una variable que se denomina frutas_aleatorias que se va a utilizar la biblioteca random que va a llamar a la función sample() que es una función que se utiliza con el objetivo de seleccionar de manera aleatoria una muestra o varias de una determinada variable creando una lista que contenga dicha muestra o muestras que se va a aplicar con base en las muestras que contiene la variable frutas, pero se establece el número de muestras a escoger por medio de la variable k que en este caso es 3 muestras\n",
+        "print(frutas_aleatorias) # Se imprime en pantalla la lista generada a traves de la variable frutas_aleatorias que va a ser escogida tres datos de la lista de la variable frutas"
+      ],
+      "metadata": {
+        "id": "zzRqyyYwrwxI",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "900e056e-c43a-467c-b22c-2edc90fa2c66"
+      },
+      "execution_count": 36,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "['banana', 'coco', 'sandia']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from math import * # El fromn dice que va a llamar la biblioteca math que va a establecer todas las funciones a través de declarar el simbolo \"*\" que va a permitir utilizar todos los metodos de esa biblioteca\n",
+        "from random import choice # El from dice que va a llamar la biblioteca random que va a establecer la función choice que es la que se encarga de escoger un dato de la lista o diccionario que se le aplique la variable\n",
+        "numeros = [2, 8, 15, 23, 91, 112, 256] # Se declara una variable que se denomina numeros que es un dato de tipo lista que va a contener datos de tipo entero que van a ser una lista de numeros que se contienen\n",
+        "numero_aleatorio_3 = choice(numeros) # Se declara una variable que se denomina numero_aleatorio_3 que va a aplicar la función de choice() que va a establecer una selección aleatoria de un número de los números declarados en la variable numeros\n",
+        "print(f\"\\nA raiz quadrada de {numero_aleatorio_3} é igual a {sqrt(numero_aleatorio_3)}\") # Se imprime en pantalla el mensaje, el valor de la variable numero_aleatorio_3 que establece el número escogido de manera aleatoria de la variable numeros que es de tipo lista y se aplica la función sqrt que va ser aplicado la función de raíz cuadrada a el número aleatorio escogido a través de la variable numero_aleatorio_3"
+      ],
+      "metadata": {
+        "id": "1hWdOf9ms2cf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "18e8d8b3-94a8-4ada-a6c7-b4b88df4b018"
+      },
+      "execution_count": 37,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "A raiz quadrada de 15 é igual a 3.872983346207417\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import math # Se va a insertar la biblioteca de math, que es una función que va a permitir realizar operaciones matematicas\n",
+        "\n",
+        "radio = float(input(\"Ingresa el radio del área circular en metros: \")) # Se declara una variable que se denomina radio que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número radio que ingrese el usuario para determinar el área\n",
+        "area = math.pi * (radio ** 2) # Se declara una variable que se denomina area que se va a utilizar la biblioteca math que va a llamar la función pi que va a llamar el número pi que va a multiplicarse por la variable radio que es el valor del radio que ingrese el usuario y esto elevado al cuadrado\n",
+        "costo = area * 25.00  # Se declara una variable que se denomina costo que va a ser la operación de la variable area que es el area calculada con base en la variable radio que ingresa el usuario que va a ser multiplicado por 25.00 que es el precio por metro al cuadrado esta variable se realizo con el cobjetivo de determinar el precio por metro cuadrado\n",
+        "print(f\"El costo total del césped es: R$ {costo:.2f}\") # Se imprime en pantalla el mensaje y el valor de la variable costo que determina el precio por metro al cuadrado esta variable se realizo con el cobjetivo de determinar el precio por metro cuadrado que va a determinarse dos números adicionales junto a los enteros"
+      ],
+      "metadata": {
+        "id": "NMw1a56it5Gn",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "35b67f17-e6e3-4f12-bb5e-05562a1f819a"
+      },
+      "execution_count": 38,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Ingresa el radio del área circular en metros: 40\n",
+            "El costo total del césped es: R$ 125663.71\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "notas = {'1° trimestre': 9.5,'2° trimeste': 8, '3° trimestre': 7} # Se declara una variable que se denomina notas que va a actuar como un valor de tipo diccionario que va a acumular los valores de los trimestres y el valor númerico que obtuvo el estudiante"
+      ],
+      "metadata": {
+        "id": "WQ-pCgdaMOlc"
+      },
+      "execution_count": 40,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "suma = 0 # Se declara una variable que se denomina suma que se va a declarar con un valor de 0 ya que va a actuar como un contador que va a ir sumandose un dato cada vez que se itere mediante el bucle for\n",
+        "for s in notas.values(): # Se declara una función que es el for que va a funcionar como un bucle que se va a declarar una variable que se denomina s que va a actuar como una iteracción dentro del bucle for y esto abarcara un rango determinado por la aplicación en la variable notas que es de tipo diccionario se aplique la función values() que se va a utilizar para determinar el valor entero que compone la variable notas que es un diccionario\n",
+        "  suma += s # Se va a adiccionar a la varible suma que va a proceder a sumarse el valor de cada iteración que va a recorrer la variable notas hasta terminar el bucle for\n",
+        "print(suma) # Se imprime en pantalla por fuera del ciclo for la suma de los datos de tipo entero que se acumulan en la variable notas que es de tipo diccionario esa variable"
+      ],
+      "metadata": {
+        "id": "GU-HvC-QMOoS",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "435b314c-eba4-40eb-c82d-53e5814fdf25"
+      },
+      "execution_count": 41,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "24.5\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio = sum(notas.values()) / len(notas) # Se declara una variable que se denomina promedio que va a utilizar funciones propias de Python la primera es sum() que va a sumar los datos aplicando a la variable notas que es de tipo diccionario se aplique la función values() que se va a utilizar para determinar el valor entero que compone la variable notas entre la segunda función es len() que va a determinar la longitud de la variable notas que se es de tipo diccionario\n",
+        "promedio # Se imprime en la pantalla el promedio que va a obetener el usuario"
+      ],
+      "metadata": {
+        "id": "qKEyjY2bMOqj",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f7907792-9fcc-4ccb-8ce3-90fe3790aee7"
+      },
+      "execution_count": 42,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "8.166666666666666"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 42
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio_redondeado = round(promedio,2) # Se declara una variable que se denomina promedio_redondeado que se va a aplicar una función de Python que es round() que va a aplicarse en la variable promedio que es el promedio que obtuvo el usuario y se redondea por dos decimales\n",
+        "promedio_redondeado # Se imprime en la pantalla el promedio redondeado que obtuvo el usuario"
+      ],
+      "metadata": {
+        "id": "c7Cn5XFfMP5E",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "d24a0f97-d12a-4be4-b5c3-8ad627313863"
+      },
+      "execution_count": 43,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "8.17"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 43
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "peso = float(input(\"Digita el peso, en kilogramos: \")) # Se declara una variable que se denomina peso que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar el peso que ingrese el usuario\n",
+        "altura = float(input(\"Digita la altura, en metros: \")) # Se declara una variable que se denomina altura que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar la altura que ingrese el usuario\n",
+        "\n",
+        "imc = round(peso / pow(altura, 2), 2) # Se declara una variable que se denomina imc que va a aplicar las funciones de Python que son round() que va a establecer dos decimales despues de los enteros y se aplica a la operación de la variable peso dividido entre la función pow() que utiliza como primer parametro la variable altura y como segundo parametro 2 ya que va a ser elevado al cuadrado esa altura que ingreso el usuario\n",
+        "\n",
+        "print(f\"El IMC de la persona es: {imc}\") # Se imprime el mensaje y se lee el valor de la variable imc que determina el valor del indice corporal de masa del usuario"
+      ],
+      "metadata": {
+        "id": "yhJna1RXzre6",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c9bbf35d-04da-458e-b908-4f3877374434"
+      },
+      "execution_count": 44,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Digita el peso, en kilogramos: 80\n",
+            "Digita la altura, en metros: 1.70\n",
+            "El IMC de la persona es: 27.68\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def promedio(): # Se define una función especifica del programador que es promedio que no va a exigir ningún parametro para utilizar esta función\n",
+        "  calculo=(10+9+7)/3 # Se establece una variable que se denomina calculo que se va a sumar los valores denominados 10,9 y 7 en este caso y se van a dividir entre 3 en este caso\n",
+        "  print(calculo) # Y por ultimo se imprime el valor de la variable calculo que es la que va a determinar el promedio"
+      ],
+      "metadata": {
+        "id": "WgWoULpnMSrT"
+      },
+      "execution_count": 45,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio() # Se va a imprimir el valor generado por la función promedio() que va a tener como objetivo calcular el promedio de notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "VKfg0zkDMStp",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "3759da6f-707a-4d23-8e45-b1d9a9b353ea"
+      },
+      "execution_count": 46,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "8.666666666666666\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def promedio(nota_1,nota_2,nota_3): # Se define una función especifica del programador que es promedio que va a ser exigido tres parametros que son la nota_1, la nota_2 y la nota_3 que son las notas que va a recibir ese usuario\n",
+        "  calculo=(nota_1+nota_2+nota_3)/3 # Se establece una variable que se denomina calculo que se va a sumar los valores determinados por las variables nota_1, nota_2 y nota_3 que van a ser los datos de las notas del usuario y se van a dividir entre 3 en este caso\n",
+        "  print(calculo) # Y por ultimo se imprime el valor de la variable calculo que es la que va a determinar el promedio"
+      ],
+      "metadata": {
+        "id": "1QHJXCYsMUx3"
+      },
+      "execution_count": 48,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio(10,9,7) # Se va a imprimir el valor generado por la función promedio(), pero declarando los valores de las variables nota_1, nota_2 y nota_3 que va a tener como objetivo calcular el promedio de notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "txkkIwheMU0n",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "ff07e173-55b1-4b04-f230-39eb0014750e"
+      },
+      "execution_count": 49,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "8.666666666666666\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio(nota_1=10,nota_2=9,nota_3=7) # Se va a imprimir el valor generado por la función promedio(), pero declarando los valores de las variables nota_1, nota_2 y nota_3 que va a tener como objetivo calcular el promedio de notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "Pq88ApQEMWK9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a0b643ac-7732-4c11-8e74-2995e10b07a7"
+      },
+      "execution_count": 50,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "8.666666666666666\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "notas = [8.5, 9.0, 6.0, 10.0] # Se declara una variable que se denomina notas que es de tipo lista que va a contener las notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "U4MlTO9ucAKc"
+      },
+      "execution_count": 51,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def promedio(lista): # Se define una función especifica del programador que es promedio que va a ser exigido por una variable que va a ser la variable notas que es un tipo de dato lista que va a contener las notas de un estudiante\n",
+        "  calculo = sum(lista) / len(lista) # Se declara una variable que se denomina calculo que va a utilizar funciones propias de Python la primera es sum() que va a sumar los datos que contiene la variable notas que es de tipo lista que establecen las notas del estudiante entre la segunda función es len() que va a determinar la longitud de la variable notas que se es de tipo lista\n",
+        "  print(calculo) # Y por ultimo se imprime el valor de la variable calculo que es la que va a determinar el promedio"
+      ],
+      "metadata": {
+        "id": "ZrqyDBNFMYOK"
+      },
+      "execution_count": 52,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio(notas) # Se va a imprimir el valor generado por la función promedio(), pero declarando el valor de tipo lista como la variable notas que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "wEkixagwMY2E",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a7bbe53e-e5fc-45bc-9d39-c24ac22ded69"
+      },
+      "execution_count": 53,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "8.375\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "media = promedio(notas) # Se declara una variable que se denomina media que va a contener el valor generado por la función promedio(), pero declarando el valor de tipo lista como la variable notas que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "60Gvxd9tMa5d",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "3e9a2039-2ec8-4134-d5e0-71ad7652d995"
+      },
+      "execution_count": 54,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "8.375\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "type(media) # Se declara la utilización de la función type() que indica el tipo de valor que determina la variable media que en este caso es que no tiene un tipo"
+      ],
+      "metadata": {
+        "id": "2pYhXKv_20cW",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "60f41adb-dcd0-4ee9-98e0-9b80d092d55c"
+      },
+      "execution_count": 55,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "NoneType"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 55
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# calculo # Es una variable local que solo actua en el interior de la función promedio()"
+      ],
+      "metadata": {
+        "id": "yTOqJSgsMbdJ"
+      },
+      "execution_count": 56,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Notas del estudiante\n",
+        "notas = [8.5, 9.0, 6.0, 10.0] # Se declara una variable que se denomina notas que es de tipo lista que va a contener las notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "GlWdnX7Ubgl3"
+      },
+      "execution_count": 57,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def promedio(lista): # Se define una función especifica del programador que es promedio que va a ser exigido por una variable que va a ser la variable notas que es un tipo de dato lista que va a contener las notas de un estudiante\n",
+        "  resultado = sum(lista) / len(lista) # Se declara una variable que se denomina resultado que va a utilizar funciones propias de Python la primera es sum() que va a sumar los datos que contiene la variable notas que es de tipo lista que establecen las notas del estudiante entre la segunda función es len() que va a determinar la longitud de la variable notas que se es de tipo lista\n",
+        "  return resultado # Se va a aplicar la función return que va a retornar la función promedio() el valor que contiene la variable resultado"
+      ],
+      "metadata": {
+        "id": "JdMFsT9GMgI6"
+      },
+      "execution_count": 58,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "promedio(notas) # Se va a imprimir el valor generado por la función promedio(), pero declarando el valor de tipo lista como la variable notas que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "p7AwNnTCMgLf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "d0061b50-930a-4563-cd47-cdb9b52cbe7a"
+      },
+      "execution_count": 59,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "8.375"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 59
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "resultado = promedio(notas) # Se declara una variable que se denomina resultado que va a contener el valor generado por la función promedio(), pero declarando el valor de tipo lista como la variable notas que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "35zC247QMgRP"
+      },
+      "execution_count": 60,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "type(resultado) # Se declara la utilización de la función type() que indica el tipo de valor que determina la variable resultado que va a devolver que la variable resultado que en este caso es de tipo flotante el dato"
+      ],
+      "metadata": {
+        "id": "TjmB8IWpMgV4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c6773676-94c4-4d19-ab61-0c1c0b31b3ad"
+      },
+      "execution_count": 61,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "float"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 61
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Notas del estudiante\n",
+        "notas = [8.5, 9.0, 6.0, 10.0] # Se declara una variable que se denomina notas que es de tipo lista que va a contener las notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "3saGo2kDf0BY"
+      },
+      "execution_count": 62,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def boletin(lista): # Se define una función especifica del programador que es boletin que va a ser exigido por una variable que va a ser la variable notas que es un tipo de dato lista que va a contener las notas de un estudiante\n",
+        "  resultado = sum(lista) / len(lista) # Se declara una variable que se denomina resultado que va a utilizar funciones propias de Python la primera es sum() que va a sumar los datos que contiene la variable notas que es de tipo lista que establecen las notas del estudiante entre la segunda función es len() que va a determinar la longitud de la variable notas que se es de tipo lista\n",
+        "  if resultado >= 7: # Se declara una condicional que debe cumplirse que es que la variable resultado que debe ser mayor o igual a 7 que si esto se cumple se va a ejecutar lo siguiente\n",
+        "    situacion = (f\"El estudiante está aprobado(a)\") # Se declara una variable que se denomina situacion que va a contener el valor de tipo string que va a determinar que el estudiante aprobo\n",
+        "  else: # Sino, se cumple la condición anterior se ejecutara lo siguiente\n",
+        "    situacion = (f\"El estudiante está reprobado(a)\") # Se declara una variable que se denomina situacion que va a contener el valor de tipo string que va a determinar que el estudiante reprobo\n",
+        "  return (resultado,situacion) # Se va a aplicar la función return que va a retornar la función boletin() los valores que contiene las variables resultado y situacion"
+      ],
+      "metadata": {
+        "id": "unNLrdFjMjbv"
+      },
+      "execution_count": 63,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "boletin(notas) # Se va a imprimir el valor generado por la función boletin(), pero declarando el valor de tipo lista como la variable notas que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "Rmvg4hNeMjeD",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "03ed8eeb-e1f4-4699-c6dd-ab504c3d6e13"
+      },
+      "execution_count": 64,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(8.375, 'El estudiante está aprobado(a)')"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 64
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "resultado, situacion = boletin(notas) # Se declara una variable que se denomina resultado y situacion que va a contener el valor generado por la función boletin(), pero declarando el valor de tipo lista como la variable notas que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "jCYuFpmeMji6"
+      },
+      "execution_count": 65,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(f'El/La estudiante obtuvo un puntaje de: {resultado} y su situación es: {situacion}') # Se imprime en pantalla el mensaje, el valor de la variable resultado que representa el promedio del estudiante y el valor de la variable situación que determina la situación del estudiante si aprobo o reprobo"
+      ],
+      "metadata": {
+        "id": "hSht0Z2cMjlT",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "72d8bcea-d1e9-4a07-e821-43d1f50c833f"
+      },
+      "execution_count": 66,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "El/La estudiante obtuvo un puntaje de: 8.375 y su situación es: El estudiante está aprobado(a)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Notas del estudiante\n",
+        "notas_2 = [7.5, 4.0, 3.0, 10.0] # Se declara una variable que se denomina notas_2 que es de tipo lista que va a contener las notas de un estudiante"
+      ],
+      "metadata": {
+        "id": "tLdjCulMMjnD"
+      },
+      "execution_count": 67,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "boletin(notas_2) # Se va a imprimir el valor generado por la función boletin(), pero declarando el valor de tipo lista como la variable notas_2 que va a determinar las notas del estudiante"
+      ],
+      "metadata": {
+        "id": "u3GfujMe8FLo",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "748aa0ea-3e80-492a-ea57-984c971add66"
+      },
+      "execution_count": 68,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(6.125, 'El estudiante está reprobado(a)')"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 68
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "x = 7 # Se declara una variable que se denomina x que va a contener el valor de 7 que es un dato de tipo entero\n",
+        "\n",
+        "def suma(): # Se define una función especifica del programador que es suma que no va a exigir ningún parametro para utilizar esta función\n",
+        "  y = 9 # Se declara una variable que se denomina y que va a contener el valor de 9 que es un dato de tipo entero\n",
+        "  print(x + y) # Se imprime el valor de la suma de los valores que contienen las variables x como la y"
+      ],
+      "metadata": {
+        "id": "D4FtLv8d8p9S"
+      },
+      "execution_count": 69,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "suma() # Se va a imprimir el valor generado por la función suma() que va a tener como objetivo calcular la suma de las dos variables x como y"
+      ],
+      "metadata": {
+        "id": "_jcFZfp_8tNP",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4182ab80-e535-460a-feab-9e6a86b32a29"
+      },
+      "execution_count": 70,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "16\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nota_ = float(input(\"Digite una nota:\")) # Se declara una variable que se denomina nota_ que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar nota que ingrese el usuario\n",
+        "def cualitativa(nota): # Se define una función especifica del programador que es boletin que va a ser exigido por una variable que va a ser la variable nota que es la nota que va a ingresar el usuario que es un tipo de dato flotante\n",
+        "  return nota + 0.5 # Se va a aplicar la función return que va a retornar la función cualitativa que va a aplicarse en el dato de la variable nota_ que es la que ingresa el usuario que va a sumar 0.5 a esa nota ingresada por el usuario\n",
+        "cualitativa(nota_) # Se va a imprimir el valor generado por la función cualitativa(), pero declarando el valor de tipo flotante como la variable nota_ que va a determinar la nota más 0.5 del estudiante"
+      ],
+      "metadata": {
+        "id": "wcNxDJoPMmTJ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c2355c27-54dc-487b-8ac3-9c6a7db2efd5"
+      },
+      "execution_count": 71,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Digite una nota:8\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "8.5"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 71
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nota_ = float(input(\"Digite una nota:\")) # Se declara una variable que se denomina nota_ que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar nota que ingrese el usuario\n",
+        "cualitativa = lambda x: x + 0.5 # Se declara una función lambda que se denomina cualitativa que va a evaluar y va a devolver solo una expresión compacta y esta variable declara una variable que va ser el parametro de la función lamdba que es x que va a aplicarse en el dato de la variable nota_ que va a equivaler a utilizar en esta función la variable x que es la que ingresa el usuario que va a sumar 0.5 a esa nota ingresada por el usuario\n",
+        "cualitativa(nota_) # Se va a imprimir el valor generado por la función cualitativa(), pero declarando el valor de tipo flotante como la variable nota_ que va a determinar la nota más 0.5 del estudiante"
+      ],
+      "metadata": {
+        "id": "S-baAoaQMmVy",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c6ab675a-2bc7-4e59-ae7a-7b5869a804c9"
+      },
+      "execution_count": 72,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Digite una nota:6\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "6.5"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 72
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nota_1 = float(input(\"Digite la nota 1:\")) # Se declara una variable que se denomina nota_1 que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar nota que ingrese el usuario\n",
+        "nota_2 = float(input(\"Digite la nota 2:\")) # Se declara una variable que se denomina nota_2 que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar nota que ingrese el usuario\n",
+        "nota_3 = float(input(\"Digite la nota 3:\")) # Se declara una variable que se denomina nota_3 que va a aplicar dos funciones, que la primera función es float que va a declarar que el número que escriba el usuario como un dato de tipo flotante y la segunda función es input que va a escribir el mensaje que ingrese el número que va a representar nota que ingrese el usuario\n",
+        "\n",
+        "poderado = lambda x,y,z: (x*3 + y*2 + z*5) / 10 # Se declara una función lambda que se denomina poderado que va a evaluar y va a devolver solo una expresión compacta y esta variable que va a ser los parametros de la función lamdba que son x que va a aplicarse en el dato de la variable nota_1, y que va a aplicarse en el dato de la variable nota_2 y z que va a aplicarse en el dato de la variable nota_3 que va a aplicar la siguiente operación que es x por 3 más y por 2 más z por 5 ese resultado se va a dividir entre 10\n",
+        "\n",
+        "poderado(nota_1,nota_2,nota_3)"
+      ],
+      "metadata": {
+        "id": "6YxEn9aiMnYJ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "d96dffe0-6d20-4ce0-9d2e-e744ef4c495e"
+      },
+      "execution_count": 73,
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": [
+            "Digite la nota 1:7\n",
+            "Digite la nota 2:4\n",
+            "Digite la nota 3:6\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "5.9"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 73
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "nota_final = poderado(nota_1,nota_2,nota_3) # Se va a imprimir el valor generado por la función promedio(), pero declarando los valores de las variables nota_1, nota_2 y nota_3 que va a tener como objetivo calcular el calcular la nota final del estudiante"
+      ],
+      "metadata": {
+        "id": "TaLPI7E2-t34"
+      },
+      "execution_count": 74,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(f'El promedio ponderado del estudiante es: {nota_final}') # Se imprime en pantalla el mensaje y se lee el valor de la variable nota_final que va a tener como objetivo calcular el calcular la nota final del estudiante"
+      ],
+      "metadata": {
+        "id": "Ptn9gQaPMnaz",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "8b7a09e3-2819-491e-c4d3-4426aaca64fb"
+      },
+      "execution_count": 75,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "El promedio ponderado del estudiante es: 5.9\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Notas del estudiante\n",
+        "notas = [6.0, 7.0, 9.0, 5.5, 8.0] # Se declara una variable que se denomina notas que es de tipo lista que va a contener las notas de un estudiante\n",
+        "cualitativo = 0.5 # Se declara una variable que se denomina cualitativo que va a contener el valor de 0.5 que es un tipo de dato flotante"
+      ],
+      "metadata": {
+        "id": "RdoaWhuVI_OB"
+      },
+      "execution_count": 89,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "notas_actualizadas = lambda x: x + 0.5 # Se declara una variable que se denomina notas_actualizadas que se va a declarar una función lambda que se denomina poderado que va a evaluar y va a devolver solo una expresión compacta y esta variable que va a ser el dato de la variable x que es la que contiene la variable notas que es la lista de notas del usuario que va a sumarse 0.5 a cada dato que contiene la variable notas que es un dato de tipo lista"
+      ],
+      "metadata": {
+        "id": "PzDfbv-kMq2t"
+      },
+      "execution_count": 90,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "notas_actualizadas = map(lambda x: x + 0.5, notas) # Se declara una variable\n",
+        "notas_actualizadas"
+      ],
+      "metadata": {
+        "id": "ZbfpvfWJMsjv",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "db4895ff-56b0-45ff-ee86-ce26e51f5b3d"
+      },
+      "execution_count": 93,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<map at 0x79803e62d660>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 93
+        }
+      ]
+    }
+  ]
+}
